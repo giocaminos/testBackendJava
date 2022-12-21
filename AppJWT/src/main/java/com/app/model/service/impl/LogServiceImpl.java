@@ -17,7 +17,7 @@ public class LogServiceImpl  implements ILogService {
 
 	@Override
 	public List<Log> findAll() {
-		return (List<Log>) dao.findAll();
+		return (List<Log>) dao.findByOrderByIdDesc();
 	}
 
 	@Override

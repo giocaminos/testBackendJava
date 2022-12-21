@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.logging.Logger;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,11 +32,19 @@ public class ViewRest {
 
 		ConexionAPIService con = new ConexionAPIService(date, country);
 		String r = con.conexionAPI_TIMEZONE();
-		System.out.println(r);
-
-		Log log = new Log();
-		log.setValor(r);
-		service.save(log);
+		JSONObject json_transform = null;
+		try {
+			json_transform = new JSONObject(r);
+            
+	        json_transform = (JSONObject) json_transform.get("data");
+	        
+	        json_transform = (JSONObject) json_transform.get("timezone");
+	        Log log = new Log();
+			log.setValor(json_transform.toString());
+			service.save(log);
+		} catch (Exception e) {
+			return null;
+		}		
 		return r;
 	}
 

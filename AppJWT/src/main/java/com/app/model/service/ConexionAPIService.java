@@ -33,20 +33,16 @@ public class ConexionAPIService {
 	public String conexionAPI_TIMEZONE() {
 		try {
 			HttpClient client = HttpClients.createDefault();
-//https://api.timezonedb.com/v2.1/list-time-zone?key=WBEZOY21FWU1&format=json
 
 			String stubsApiBaseUri = Constantes.URL_BASE_TIMEZONE + country + "&date=" + date + "&token="
 					+ Constantes.TOKEN_API_TIMEZONE;
-
+System.out.println(stubsApiBaseUri);
 			URIBuilder builder = new URIBuilder(stubsApiBaseUri);
 
 			String listStubsUri = builder.build().toString();
 			HttpGet getStubMethod = new HttpGet(listStubsUri);
 			HttpResponse getStubResponse = client.execute(getStubMethod);
-			/*int getStubStatusCode = getStubResponse.getStatusLine().getStatusCode();
-			if (getStubStatusCode < 200 || getStubStatusCode >= 300) {
-				return "Estatus: " + getStubStatusCode + " Error al Conectarse a la API";
-			}*/
+
 			String responseBody = EntityUtils.toString(getStubResponse.getEntity());
 			
 			return responseBody;
